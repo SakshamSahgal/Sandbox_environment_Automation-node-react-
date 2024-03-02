@@ -15,7 +15,7 @@ REM Check if Git is installed
 	if %errorlevel% neq 0 (
 		echo Git is not installed or not found in the system PATH.
 		pause
-		exit
+		exit /b 1
 	) else (
 		echo Git is installed and found in the system PATH.
 	)
@@ -28,11 +28,37 @@ REM Clone the repository
 	if %errorlevel% neq 0 (
 		echo An error occurred while cloning the repository.
 		pause
-		exit
+		exit /b 1
 	) else (
 		echo Repository cloned successfully.
 	)
 exit /b 0
+
+:open_vscode
+	echo Opening Visual Studio Code in directory: %1
+	if exist "%1" (
+		start /B code "%1"
+	) else (
+		echo Directory not found: %1
+		exit /b 1
+	)
+exit /b 0
+
+:run_npm_install
+echo Running npm install in directory: %1
+if exist "%1\node_modules\" (
+    echo Node modules already installed in directory: %1
+) else (
+    pushd "%1" && (
+        npm install
+        popd
+    ) || (
+        echo Failed to run npm install in directory: %1
+        exit /b 1
+    )
+)
+exit /b 0
+
 
 :MAIN
 echo "---------------------------------"
@@ -40,6 +66,14 @@ REM Call functions in sequence
 call :CheckGitInstallation
 echo "---------------------------------"
 call :CloneRepository
+echo "---------------------------------"
+call :open_vscode %clone_directory%\Backend
+echo "---------------------------------"
+call :open_vscode %clone_directory%\Frontend
+echo "---------------------------------"
+call :run_npm_install %clone_directory%\Backend
+echo "---------------------------------"
+call :run_npm_install %clone_directory%\Frontend
 echo "---------------------------------"
 
 REM Pause to keep the command window open after execution (optional)
