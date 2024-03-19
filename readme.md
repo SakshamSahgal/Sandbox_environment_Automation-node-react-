@@ -5,10 +5,20 @@
 3. It can be used for testing any new feature in a completely `isolated` and already setup environment.
 4. I am including Backend env because it doens't have anything important.
 
+## Prerequisite
+
+1. Must have `git` already installed and setup.
+
+2. Must have `Vs-Code` already installed.
+
+3. Must have `npm` already installed.
+
+4. Must be using `Windows` OS.
+
 ## How to Use :
 
 1. Just Download the `automate.bat` (nothing else from the repo).
-2. open it with notepad.
+2. open it with `notepad`.
 3. Change the value of `clone_directory` on `line 5` to your desired directory where  you want to get the sandbox environment setup.
 4. Run the `automate.bat` file.
 
@@ -55,7 +65,7 @@ graph TD;
 
 ## React Frontend
 
-1. Already removed usless react `Boilerplate Code`
+1. Already removed usless react `Boilerplate Code`.
 
 2. Have a basic `HI` return from `App component`.
 
