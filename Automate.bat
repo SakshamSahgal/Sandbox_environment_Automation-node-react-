@@ -2,7 +2,7 @@
 
 echo "Starting the automation process"
 REM Set the directory where you want to clone the repository
-set "clone_directory=C:\Projects\test"
+set "clone_directory=C:\Projects\CloneTest"
 REM Set the URL of the Git repository you want to clone
 set "repo_url=https://github.com/SakshamSahgal/SandboxenvironmentAutomation-node-react-"
 
@@ -18,6 +18,25 @@ REM Check if Git is installed
 		exit /b 1
 	) else (
 		echo Git is installed and found in the system PATH.
+	)
+exit /b 0
+
+REM Delete Automate.bat and .git folder from clone_directory
+:DeleteFilesAndFolders
+	echo Deleting Automate.bat and .git folder from clone_directory...
+	del /Q %clone_directory%\Automate.bat
+	rd /S /Q %clone_directory%\.git
+
+	if exist %clone_directory%\Automate.bat (
+		echo Failed to delete Automate.bat from clone_directory.
+	) else (
+		echo Automate.bat deleted successfully from clone_directory.
+	)
+
+	if exist %clone_directory%\.git (
+		echo Failed to delete .git folder from clone_directory.
+	) else (
+		echo .git folder deleted successfully from clone_directory.
 	)
 exit /b 0
 
@@ -66,6 +85,8 @@ REM Call functions in sequence
 call :CheckGitInstallation
 echo "---------------------------------"
 call :CloneRepository
+echo "---------------------------------"
+call :DeleteFilesAndFolders
 echo "---------------------------------"
 call :open_vscode %clone_directory%\Backend
 echo "---------------------------------"
